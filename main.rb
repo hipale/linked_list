@@ -72,6 +72,16 @@ class LinkedList
     end
     return new_arr.join(' -> ')
   end
+
+  def insert_at(value, index)
+    count = index
+    temp_length = @arr.length - count - 1
+    until count == temp_length
+      @arr.push(Node.new(@arr[count].value))
+      count += 1
+    end
+    @arr[index] = Node.new(value)
+  end
 end
 
 class Node 
@@ -84,7 +94,10 @@ end
 
 
 list = LinkedList.new(2, 4)
-puts list.size
+list.prepend(1)
+list.append(9)
+list.insert_at(5, 1)
 puts list.to_s
+
 
 
