@@ -6,19 +6,21 @@ class LinkedList
   end
 
   def append(value)
-    if @head == nil
-      @head = Node.new(value)
-    else 
-      @arr << Node.new(value)
+    @arr.push(Node.new(value))
+    if @head.value == nil
+      @head = @arr.first
+    else
+      @tail = @arr.last
     end
   end
 
   def prepend(value)
     if @head == nil
       @head = Node.new(value)
+      @arr.unshift(@head)
     else 
       @arr.unshift(Node.new(value))
-      @head = @arr[0]
+      @head = @arr.first
     end
   end
 
@@ -35,13 +37,16 @@ class LinkedList
   end
 
   def at(index)
-    @arr.each_with_index { |elm, inx| if inx == index then return elm.value end}
+    if index > @arr.length - 1
+      return false
+    else 
+      return @arr[index].value
+    end
   end
 
   def pop
   @arr.delete(@arr.last)
   @tail = @arr.last
-  return @tail.value
   end
 
   def contains?(value)
@@ -57,6 +62,16 @@ class LinkedList
       count += 1
     end  
   end
+
+  def to_s
+    new_arr = []
+    count = 0
+    until count == @arr.length
+      new_arr[count] = "(#{@arr[count].value.to_s})"
+      count += 1
+    end
+    return new_arr.join(' -> ')
+  end
 end
 
 class Node 
@@ -68,6 +83,8 @@ class Node
 end
 
 
-list = LinkedList.new(2, 5)
-list.pop
-print list.find(5)
+list = LinkedList.new(2, 4)
+puts list.size
+puts list.to_s
+
+
