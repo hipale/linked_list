@@ -29,11 +29,11 @@ class LinkedList
   end
 
   def head
-    return @head.value
+    @arr == [] ? false : @head.value
   end
 
   def tail
-    return @tail.value
+    @arr == [] || @arr.length == 1 ? false : @tail.value
   end
 
   def at(index)
@@ -98,11 +98,8 @@ end
 
 
 list = LinkedList.new(2, 4)
-list.prepend(1)
-list.append(2)
-list.insert_at(5, 1)
-puts list.at(3)
-puts list.to_s
+list.append(5)
+puts list.tail
 
 
 
