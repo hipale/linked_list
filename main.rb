@@ -11,6 +11,7 @@ class LinkedList
       @head = @arr.first
     else
       @tail = @arr.last
+      @head.next_node = @arr[1]
     end
   end
 
@@ -19,7 +20,7 @@ class LinkedList
       @head = Node.new(value)
       @arr.unshift(@head)
     else 
-      @arr.unshift(Node.new(value))
+      @arr.unshift(Node.new(value, @arr[1]))
       @head = @arr.first
     end
   end
@@ -37,11 +38,7 @@ class LinkedList
   end
 
   def at(index)
-    if index > @arr.length - 1
-      return false
-    else 
-      return @arr[index].value
-    end
+    index > @arr.length - 1 ? false : @arr[index].value
   end
 
   def pop
@@ -50,7 +47,15 @@ class LinkedList
   end
 
   def contains?(value)
-    @arr.any? {|elm| elm.value == value}
+    contain = false
+    count = 0
+    until count == @arr.length
+      if @arr[count].value == value 
+        contain = true
+      end
+      count += 1
+    end
+    return contain
   end
 
   def find(value)
@@ -74,9 +79,8 @@ class LinkedList
   end
 
   def insert_at(value, index)
-    count = index
     temp_length = @arr.length
-    until count == temp_length
+    until index == temp_length
       if @arr[temp_length] == nil
         @arr.push(Node.new(@arr[temp_length - 1]).value)
       else
@@ -85,6 +89,15 @@ class LinkedList
       temp_length -= 1
     end
     @arr[index] = Node.new(value)
+  end
+
+  def remove_at(index)
+    left_arr = @arr.slice(0, index + 1)
+    right_arr = @arr.slice(index + 1, @arr.length)
+    left_arr.pop
+    @arr = left_arr.concat(right_arr)
+    @head = @arr[0]
+    @tail = @arr[-1]
   end
 end
 
@@ -98,8 +111,10 @@ end
 
 
 list = LinkedList.new(2, 4)
-list.append(5)
-puts list.tail
+list.prepend(5)
+list.remove_at(0)
+puts list.head
+puts list
 
 
 
