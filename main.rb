@@ -98,7 +98,10 @@ class LinkedList
       end
       temp_length -= 1
     end
-    @arr[index] = Node.new(value)
+    @arr[index] = Node.new(value, @arr[index + 1])
+    @tail = @arr.last
+    @head = @arr.first
+    @arr[index - 1].next_node = @arr[index]
   end
 
   def remove_at(index)
@@ -127,6 +130,7 @@ end
 
 list = LinkedList.new(6, 4)
 list.prepend(40)
+list.insert_at(85, 0)
 puts list.head
 puts list
 
