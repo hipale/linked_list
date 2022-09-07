@@ -3,8 +3,8 @@ class LinkedList
     @head = Node.new(head, tail)
     @tail = Node.new(tail)
     @arr = []
-    if @head.value != nil  
-      @arr.push(@head)    
+    if @head.value != nil  #array contains only varaibles that are not equal
+      @arr.push(@head)     #ton nil
       if @tail.value != nil
         @arr.push(@tail)
       end
@@ -14,17 +14,17 @@ class LinkedList
     end
   end
 
-  def append(value) //
+  def append(value) 
     @arr.push(Node.new(value))
     if @head.value == nil
       @head = @arr.first
-    else
+    else                        
       @tail = @arr.last
       @head.next_node = @arr[1]
     end
   end
 
-  def prepend(value) //
+  def prepend(value) 
     if @head == nil
       @head = Node.new(value, @arr[1])
       @arr.unshift(@head)
@@ -53,7 +53,7 @@ class LinkedList
   def pop
   @arr.delete(@arr.last)
   @tail = @arr.last
-  @arr[-2].next_node = nil
+  @arr[-1].next_node = nil
   end
 
   def contains?(value)
@@ -67,7 +67,7 @@ class LinkedList
     end
     return contain
   end
-
+                           
   def find(value)
     count = 0
     until count == @arr.length
@@ -88,7 +88,7 @@ class LinkedList
     return new_arr.join(' -> ')
   end
 
-  def insert_at(value, index) //
+  def insert_at(value, index)
     temp_length = @arr.length
     until index == temp_length
       if @arr[temp_length] == nil
@@ -101,13 +101,18 @@ class LinkedList
     @arr[index] = Node.new(value)
   end
 
-  def remove_at(index) //
+  def remove_at(index)
     left_arr = @arr.slice(0, index + 1)
     right_arr = @arr.slice(index + 1, @arr.length)
     left_arr.pop
     @arr = left_arr.concat(right_arr)
     @head = @arr[0]
     @tail = @arr[-1]
+    if index - 1 == nil 
+      @arr[index - 1].next_node = nil 
+    else 
+      @arr[index - 1].next_node = @arr[index]
+    end
   end
 end
 
@@ -120,8 +125,8 @@ class Node
 end
 
 
-list = LinkedList.new(nil, 4)
-list.append(40)
+list = LinkedList.new(6, 4)
+list.prepend(40)
 puts list.head
 puts list
 
